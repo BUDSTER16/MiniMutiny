@@ -5,7 +5,7 @@ using UnityEngine;
 public class Collectable : MonoBehaviour
 {
     [Header("Details")]
-    [SerializeField] private string name;
+    [SerializeField] private string item_name;
 
 
     private GameManager gameManager;
@@ -22,7 +22,7 @@ public class Collectable : MonoBehaviour
 
     private void Collect()
     {
-        gameManager.Collect(name);
+        gameManager.Collect(item_name);
         Destroy(gameObject);
     }
 }

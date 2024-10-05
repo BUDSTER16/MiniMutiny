@@ -29,12 +29,7 @@ public class PlayerControl : MonoBehaviour
         jump = Input.GetButton("Jump") && CheckGrounded();
     }
 
-    bool CheckGrounded()
-    {
-        Debug.DrawRay(col.bounds.center, -transform.up, Color.red, 0.2f);
-        Debug.Log(Physics2D.Raycast(col.bounds.center, -transform.up, 0.02f));
-        return Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0, -transform.up, 0.02f, playerLayer);
-    }
+    bool CheckGrounded() => Physics2D.BoxCast(col.bounds.center, col.bounds.size, 0, -transform.up, 0.02f, playerLayer);
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
