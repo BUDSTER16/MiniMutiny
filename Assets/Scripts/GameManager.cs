@@ -11,9 +11,14 @@ public class GameManager : MonoBehaviour
     bool daytime = true;
 
     private NPCInteraction activeSpeaker;
+    private TaskManager taskManager;
 
-    private float cycleTimer = 180;
+    [Header("Player Controller")]
+    [SerializeField] private PlayerControl player;
+
+    private float cycleTimer = 15;
     private float timer;
+    [Header("Timer UI")]
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private Image clock;
 
@@ -27,6 +32,7 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         timer = cycleTimer;
+        taskManager = FindObjectOfType<TaskManager>();
     }
 
     private void Update()
@@ -37,7 +43,7 @@ public class GameManager : MonoBehaviour
     public bool Collect(string collect_name)
     {
         bool collectable;
-        if(IsDaytime())
+        if (IsDaytime())
         {
             collectable = false;
         }
@@ -48,12 +54,10 @@ public class GameManager : MonoBehaviour
                 case "Key":
                     key = true;
                     Debug.Log("Key Collected!");
-                    Debug.Log(FormattedTime(60.25345f));
                     break;
                 case "Diamond Gear":
                     dGear = true;
                     Debug.Log("Diamond Gear Collected!");
-                    Debug.Log(FormattedTime(86.1432f));
                     break;
             }
             collectable = true;
@@ -86,16 +90,16 @@ public class GameManager : MonoBehaviour
     private void EvaluateTimer()
     {
         if (timerEnabled && timer > 0) { timer -= Time.deltaTime; }
-        else
+        else if (timerEnabled && timer <= 0)
         {
-
+            CyclePhases();
         }
         timerText.text = FormattedTime(timer);
     }
 
     private void CyclePhases()
     {
-        if(IsDaytime())
+        if (IsDaytime())
         {
             daytime = false;
             clock.sprite = nightClock;
@@ -105,6 +109,9 @@ public class GameManager : MonoBehaviour
             daytime = true;
             clock.sprite = dayClock;
         }
+
+        timer = cycleTimer;
+        player.ReturnToRoom();
     }
 
     public void SetActiveText(NPCInteraction NPC)
@@ -124,7 +131,7 @@ public class GameManager : MonoBehaviour
 
         int seconds = (int)System.Math.Truncate(rawTime % 60);
 
-        if(seconds >= 10)
+        if (seconds >= 10)
         {
             time += System.Math.Truncate(rawTime % 60).ToString();
         }
@@ -136,16 +143,25 @@ public class GameManager : MonoBehaviour
 
         return time;
     }
-    
+
     public void StartTimer()
     {
         timer = cycleTimer;
         timerEnabled = true;
     }
-
     public void StopTimer()
     {
         timerEnabled = false;
+    }
+
+    public void BeginTasks()
+    {
+        taskManager.ActivateTask();
+    }
+
+    public void Win()
+    {
+        Debug.Log("YOU WON");
     }
 
 }

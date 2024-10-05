@@ -35,10 +35,10 @@ public class NPCInteraction : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             tooltip.enabled = true;
-        }
-        if(Input.GetButton("Interact"))
-        {
-            StartDialogue();
+            if (Input.GetButton("Interact"))
+            {
+                StartDialogue();
+            }
         }
     }
 
@@ -74,6 +74,7 @@ public class NPCInteraction : MonoBehaviour
             if(beginner)
             {
                 gameManager.StartTimer();
+                gameManager.BeginTasks();
             }
         }
     }

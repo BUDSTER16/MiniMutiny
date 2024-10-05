@@ -2,19 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collectable : MonoBehaviour
+public class SensorButton : MonoBehaviour
 {
     [SerializeField] private Canvas tooltip;
 
-    [Header("Details")]
-    [SerializeField] private string item_name;
+    private TaskManager taskManager;
 
-
-    private GameManager gameManager;
+    [SerializeField] private float buttonStrenth;
+    [SerializeField] private Transform gaugeIndicator; 
 
     private void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
+        taskManager = FindObjectOfType<TaskManager>();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -24,10 +23,9 @@ public class Collectable : MonoBehaviour
             tooltip.enabled = true;
             if (Input.GetButton("Interact"))
             {
-                Collect();
+                Push();
             }
         }
-        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -38,12 +36,8 @@ public class Collectable : MonoBehaviour
         }
     }
 
-    private void Collect()
+    private void Push()
     {
-        if (gameManager.Collect(item_name))
-        {
-            Destroy(gameObject);
-        }
-        
+        gaugeIndicator.localPosition += new Vector3(buttonStrenth, 0, 0);
     }
 }

@@ -93,4 +93,9 @@ public class PlayerControl : MonoBehaviour
             //jumpTimerStarted = true;
         }
     }
+
+    public void ReturnToRoom()
+    {
+        transform.position = spawnPos;
+    }
 }
