@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraMover : MonoBehaviour
+public class CamMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private Vector3 camOffset = new Vector3(0f,1f,-6f);
+    private Vector3 velocity = Vector3.zero;
+    private float catchTime = 0.2f;
+
+    [SerializeField]private Transform player;
+
+
+    private void Update()
     {
-        
+        Vector3 playerPos = player.position + camOffset;
+        transform.position = Vector3.SmoothDamp(transform.position, playerPos, ref velocity, catchTime);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
