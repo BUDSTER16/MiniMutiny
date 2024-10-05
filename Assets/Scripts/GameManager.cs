@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class GameManager : MonoBehaviour
     [Header("Player Controller")]
     [SerializeField] private PlayerControl player;
 
-    private float cycleTimer = 180;
+    private float cycleTimer = 15;
     private float timer;
     [Header("Timer UI")]
     [SerializeField] private TextMeshProUGUI timerText;
@@ -25,6 +26,12 @@ public class GameManager : MonoBehaviour
     [Header("Clock Sprites")]
     [SerializeField] private Sprite dayClock;
     [SerializeField] private Sprite nightClock;
+
+    [Header("Invisible Wall")]
+    [SerializeField] private GameObject invisWall;
+
+    [Header("Beginner NPC")]
+    [SerializeField] NPCInteraction beginner;
 
     private bool timerEnabled = false;
 
@@ -103,11 +110,16 @@ public class GameManager : MonoBehaviour
         {
             daytime = false;
             clock.sprite = nightClock;
+            taskManager.MutinyTask();
         }
         else
         {
             daytime = true;
             clock.sprite = dayClock;
+            taskManager.MorningTask();
+            invisWall.SetActive(true);
+            beginner.resetDay();
+            StopTimer();
         }
 
         timer = cycleTimer;
@@ -161,7 +173,12 @@ public class GameManager : MonoBehaviour
 
     public void Win()
     {
-        Debug.Log("YOU WON");
+        SceneManager.LoadScene("Ending");
+    }
+
+    public void DisableInvisWall()
+    {
+        invisWall.SetActive(false);
     }
 
 }

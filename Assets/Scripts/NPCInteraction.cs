@@ -19,6 +19,7 @@ public class NPCInteraction : MonoBehaviour
     [SerializeField] private bool beginner;
 
 
+    private bool begunDaily = false;
     private int activeDialogue = 0;
 
     private GameManager gameManager;
@@ -71,11 +72,23 @@ public class NPCInteraction : MonoBehaviour
         else
         {
             textbox.SetActive(false);
-            if(beginner)
+            if(beginner && !begunDaily)
             {
-                gameManager.StartTimer();
-                gameManager.BeginTasks();
+                beginnerMethod();
             }
         }
+    }
+
+    private void beginnerMethod()
+    {
+        gameManager.StartTimer();
+        gameManager.BeginTasks();
+        begunDaily = true;
+        gameManager.DisableInvisWall();
+    }
+
+    public void resetDay()
+    {
+        begunDaily = false;
     }
 }

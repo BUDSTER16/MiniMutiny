@@ -31,8 +31,8 @@ public class TaskManager : MonoBehaviour
     int relayStepsDone = 0;
 
     //LED Task Variables
-    [Header("Required LED Object")]
-    [SerializeField] private GameObject led;
+    [Header("Required LED Objects")]
+    [SerializeField] private GameObject[] leds;
     bool obtainedLED = false;
     Vector3 ledSpawn = new Vector3(-19f, 4.5f, 0);
 
@@ -157,11 +157,19 @@ public class TaskManager : MonoBehaviour
     {
         taskTitle.text = "Replace The LED";
         taskDetails.text = "Find the new LED and use it to replace the old LED";
+
+        foreach (GameObject led in leds)
+        {
+            led.SetActive(true);
+        }
     }
     public void LEDProgress()
     {
         CompleteTask();
-        led.SetActive(false);
+        foreach(GameObject led in leds)
+        {
+            led.SetActive(false);
+        }
     }
     public void gotLED()
     {
@@ -181,5 +189,17 @@ public class TaskManager : MonoBehaviour
     public string GetCurrentTask()
     {
         return activeTask;
+    }
+
+    public void MutinyTask()
+    {
+        taskTitle.text = "MUTINY";
+        taskDetails.text = "Get the Key and the Diamond Gear and use them to take over the ship in the captain's office";
+    }
+
+    public void MorningTask()
+    {
+        taskTitle.text = "Get A Task";
+        taskDetails.text = "Talk to the officer outside your room to get a task!";
     }
 }
