@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lever : MonoBehaviour
+public class TV : MonoBehaviour
 {
     [SerializeField] private Canvas tooltip;
 
     private TaskManager taskManager;
 
-    private bool flipped = false;
+    private bool watched = false;
 
     private void Start()
     {
@@ -17,12 +17,12 @@ public class Lever : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && !flipped)
+        if (collision.gameObject.tag == "Player" && !watched)
         {
             tooltip.enabled = true;
             if (Input.GetButton("Interact"))
             {
-                Flip();
+                CollectInfo();
             }
         }
     }
@@ -35,16 +35,14 @@ public class Lever : MonoBehaviour
         }
     }
 
-    private void Flip()
+    private void CollectInfo()
     {
-        flipped = true;
-        GetComponent<SpriteRenderer>().flipX = true;
-        taskManager.LeverProgress();
+        watched = true;
+        taskManager.RelayProgress();
     }
 
-    public void Unflip()
+    public bool WasWatched()
     {
-        flipped = false;
-        GetComponent<SpriteRenderer>().flipX = false;
+        return watched;
     }
 }

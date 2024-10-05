@@ -19,7 +19,22 @@ public class TaskManager : MonoBehaviour
     int leversPulled = 0;
     [Header("Required Lever Objects")]
     [SerializeField] private GameObject[] levers;
-    
+
+    //Sensor Task Variable
+    [Header("Required Sensor Object")]
+    [SerializeField] private GameObject sensorGauge;
+
+    //Relay Task Variables
+    [Header("Required Relay Object")]
+    [SerializeField] private GameObject television;
+    int relayStepCount = 2;
+    int relayStepsDone = 0;
+
+    //LED Task Variables
+    [Header("Required LED Object")]
+    [SerializeField] private GameObject led;
+    bool obtainedLED = false;
+    Vector3 ledSpawn = new Vector3(-19f, 4.5f, 0);
 
     public void QueueTasks()
     {
@@ -102,12 +117,40 @@ public class TaskManager : MonoBehaviour
     {
         taskTitle.text = "Calibrate The Sensor";
         taskDetails.text = "Find the sensor and press the buttons to calibrate it! (get the needle into the green)";
+
+        sensorGauge.SetActive(true);
+    }
+
+    public void SensorProgress()
+    {
+        CompleteTask();
+        sensorGauge.SetActive(false);
     }
 
     private void RelayTask()
     {
         taskTitle.text = "Warn The Captain";
         taskDetails.text = "Find the screen and use it to get info about an upcoming corner then relay the information to the captain";
+
+        television.SetActive(true);
+    }
+
+    public void RelayProgress()
+    {
+        relayStepsDone++;
+        if(relayStepsDone >= relayStepCount)
+        {
+            CompleteTask();
+            television.SetActive(false);
+        }
+    }
+
+    public bool hasRelayInfo()
+    {
+        bool relayinfo;
+        if(relayStepsDone == 1) { relayinfo = true; }
+        else { relayinfo = false; }
+        return relayinfo;
     }
 
     private void LEDTask()
@@ -115,10 +158,28 @@ public class TaskManager : MonoBehaviour
         taskTitle.text = "Replace The LED";
         taskDetails.text = "Find the new LED and use it to replace the old LED";
     }
+    public void LEDProgress()
+    {
+        CompleteTask();
+        led.SetActive(false);
+    }
+    public void gotLED()
+    {
+        obtainedLED = true;
+    }
+    public bool HasLED()
+    {
+        return obtainedLED;
+    }
 
     private void CompleteTask()
     {
         taskTitle.text = "Task Complete";
         taskDetails.text = "Sit back and relax or explore and plan your night";
+    }
+
+    public string GetCurrentTask()
+    {
+        return activeTask;
     }
 }

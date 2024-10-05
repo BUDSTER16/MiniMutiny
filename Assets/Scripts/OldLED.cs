@@ -2,13 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lever : MonoBehaviour
+public class OldLED : MonoBehaviour
 {
     [SerializeField] private Canvas tooltip;
 
     private TaskManager taskManager;
-
-    private bool flipped = false;
 
     private void Start()
     {
@@ -17,12 +15,12 @@ public class Lever : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player" && !flipped)
+        if (collision.gameObject.tag == "Player" && taskManager.HasLED())
         {
             tooltip.enabled = true;
             if (Input.GetButton("Interact"))
             {
-                Flip();
+                Fix();
             }
         }
     }
@@ -35,16 +33,8 @@ public class Lever : MonoBehaviour
         }
     }
 
-    private void Flip()
+    private void Fix()
     {
-        flipped = true;
-        GetComponent<SpriteRenderer>().flipX = true;
-        taskManager.LeverProgress();
-    }
-
-    public void Unflip()
-    {
-        flipped = false;
-        GetComponent<SpriteRenderer>().flipX = false;
+        taskManager.LEDProgress();
     }
 }

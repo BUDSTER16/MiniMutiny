@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     [Header("Player Controller")]
     [SerializeField] private PlayerControl player;
 
-    private float cycleTimer = 15;
+    private float cycleTimer = 180;
     private float timer;
     [Header("Timer UI")]
     [SerializeField] private TextMeshProUGUI timerText;

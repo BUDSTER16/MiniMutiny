@@ -10,10 +10,12 @@ public class FinalDoor : MonoBehaviour
 
 
     private GameManager gameManager;
+    private TaskManager taskManager;
 
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        taskManager = FindObjectOfType<TaskManager>();
     }
 
     private void Update()
@@ -35,11 +37,16 @@ public class FinalDoor : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             tooltip.enabled = true;
+            if (Input.GetButton("Interact") && !gameManager.IsDaytime())
+            {
+                CheckRequirements();
+            }
+            else if(Input.GetButton("Interact") && gameManager.IsDaytime() && taskManager.GetCurrentTask() == "Relay")
+            {
+                CheckInfo();
+            }
         }
-        if (Input.GetButton("Interact"))
-        {
-            CheckRequirements();
-        }
+        
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -57,5 +64,13 @@ public class FinalDoor : MonoBehaviour
             gameManager.Win();
         }
         
+    }
+
+    private void CheckInfo()
+    {
+        if(taskManager.hasRelayInfo())
+        {
+            taskManager.RelayProgress();
+        }
     }
 }
