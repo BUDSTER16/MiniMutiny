@@ -17,6 +17,7 @@ public class PlayerControl : MonoBehaviour
     BoxCollider2D col;
 
 
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();

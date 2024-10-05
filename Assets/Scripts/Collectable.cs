@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Collectable : MonoBehaviour
 {
+    [SerializeField] private Canvas tooltip;
+
     [Header("Details")]
     [SerializeField] private string item_name;
 
@@ -15,14 +17,32 @@ public class Collectable : MonoBehaviour
         gameManager = FindObjectOfType<GameManager>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        Collect();
+        if (collision.gameObject.tag == "Player")
+        {
+            tooltip.enabled = true;
+        }
+        if (Input.GetButton("Interact"))
+        {
+            Collect();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            tooltip.enabled = false;
+        }
     }
 
     private void Collect()
     {
-        gameManager.Collect(item_name);
-        Destroy(gameObject);
+        if (gameManager.Collect(item_name))
+        {
+            Destroy(gameObject);
+        }
+        
     }
 }
