@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     private NPCInteraction activeSpeaker;
 
-    private float cycleTimer = 240;
+    private float cycleTimer = 180;
     private float timer;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private Image clock;
