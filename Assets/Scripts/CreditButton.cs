@@ -9,6 +9,7 @@ public class CreditButton : MonoBehaviour
     public void Menu()
     {
         SceneManager.LoadScene("MainMenu");
+        Destroy(GameObject.FindGameObjectWithTag("Music"));
     }
 
     public void Retry()

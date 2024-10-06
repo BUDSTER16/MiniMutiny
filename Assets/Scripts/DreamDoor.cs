@@ -43,7 +43,7 @@ public class DreamDoor : MonoBehaviour
             }
             else if(Input.GetButton("Interact") && gameManager.IsDaytime() && taskManager.GetCurrentTask() == "Relay")
             {
-                DreamCheckInfo();
+                if (DreamCheckInfo()) { collision.gameObject.GetComponent<PlayerAudio>().PlaySound("warn"); }
             }
         }
         
@@ -66,11 +66,18 @@ public class DreamDoor : MonoBehaviour
         
     }
 
-    private void DreamCheckInfo()
+    private bool DreamCheckInfo()
     {
-        if(taskManager.hasRelayInfo())
+        bool hasInfo;
+        if (taskManager.hasRelayInfo())
         {
+            hasInfo = true;
             taskManager.RelayProgress();
         }
+        else
+        {
+            hasInfo = false;
+        }
+        return hasInfo;
     }
 }

@@ -23,6 +23,7 @@ public class TV : MonoBehaviour
             if (Input.GetButton("Interact"))
             {
                 CollectInfo();
+                collision.gameObject.GetComponent<PlayerAudio>().PlaySound("ohno");
             }
         }
     }

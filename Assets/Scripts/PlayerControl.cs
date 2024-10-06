@@ -7,7 +7,7 @@ public class PlayerControl : MonoBehaviour
     [Header("Player Stats")]
     [SerializeField] float speed = 4f;
     [SerializeField] float climbSpeed = 5f;
-    [SerializeField] float rollSpeed = 0.5f;
+    [SerializeField] float rollSpeed = 2f;
 
     [SerializeField] LayerMask playerLayer;
 

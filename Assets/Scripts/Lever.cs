@@ -23,6 +23,7 @@ public class Lever : MonoBehaviour
             if (Input.GetButton("Interact"))
             {
                 Flip();
+                collision.gameObject.GetComponent<PlayerAudio>().PlaySound("lever");
             }
         }
     }

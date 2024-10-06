@@ -31,7 +31,7 @@ public class SensorButton : MonoBehaviour
             tooltip.enabled = true;
             if (Input.GetButton("Interact"))
             {
-                Push();
+                Push(collision.gameObject.GetComponent<PlayerAudio>());
             }
         }
     }
@@ -44,7 +44,7 @@ public class SensorButton : MonoBehaviour
         }
     }
 
-    private void Push()
+    private void Push(PlayerAudio source)
     {
         if(pushCooldown <= 0)
         {
@@ -57,7 +57,7 @@ public class SensorButton : MonoBehaviour
             {
                 gaugeIndicator.localPosition = new Vector3(0.6f, -0.2f, 0);
             }
-
+            source.PlaySound("button");
             pushCooldown = pushCooldownMax;
         }
 

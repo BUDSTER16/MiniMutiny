@@ -43,7 +43,7 @@ public class FinalDoor : MonoBehaviour
             }
             else if(Input.GetButton("Interact") && gameManager.IsDaytime() && taskManager.GetCurrentTask() == "Relay")
             {
-                CheckInfo();
+                if (CheckInfo()) { collision.gameObject.GetComponent<PlayerAudio>().PlaySound("warn"); }
             }
         }
         
@@ -66,11 +66,18 @@ public class FinalDoor : MonoBehaviour
         
     }
 
-    private void CheckInfo()
+    private bool CheckInfo()
     {
+        bool hasInfo;
         if(taskManager.hasRelayInfo())
         {
+            hasInfo = true;
             taskManager.RelayProgress();
         }
+        else
+        {
+            hasInfo = false;
+        }
+        return hasInfo;
     }
 }

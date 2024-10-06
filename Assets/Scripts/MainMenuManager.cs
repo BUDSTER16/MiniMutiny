@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    [SerializeField] GameObject musicMachine;
+    private void Start()
+    {
+        DontDestroyOnLoad(musicMachine);
+    }
     public void Play()
     {
         SceneManager.LoadScene("Intro");

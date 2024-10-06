@@ -24,7 +24,7 @@ public class Collectable : MonoBehaviour
             tooltip.enabled = true;
             if (Input.GetButton("Interact"))
             {
-                Collect();
+                Collect(collision.gameObject.GetComponent<PlayerAudio>()); ;
             }
         }
         
@@ -38,11 +38,11 @@ public class Collectable : MonoBehaviour
         }
     }
 
-    private void Collect()
+    private void Collect(PlayerAudio source)
     {
         if (gameManager.Collect(item_name))
         {
-            GetComponent<AudioSource>().Play();
+            source.PlaySound("pickup");
             Destroy(gameObject);
         }
         
