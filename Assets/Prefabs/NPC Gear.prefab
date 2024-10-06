@@ -313,7 +313,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cffc190772dc723499078d15f164012e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2850b274775def44ab9d889dfea2a06f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -408,4 +408,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed41130f67cd4be419b976a7f8b43d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  can: {fileID: 3837064164908874697}
+  tooltip: {fileID: 3837064164908874697}
+  textbox: {fileID: 0}
+  namebox: {fileID: 0}
+  dialoguebox: {fileID: 0}
+  characterName: 
+  dialogues: []
+  beginner: 0
+  activeDialogue: 0
+  gameManager: {fileID: 0}

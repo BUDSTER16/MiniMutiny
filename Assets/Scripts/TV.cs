@@ -23,6 +23,7 @@ public class TV : MonoBehaviour
             if (Input.GetButton("Interact"))
             {
                 CollectInfo();
+                collision.gameObject.GetComponent<PlayerAudio>().PlaySound("ohno");
             }
         }
     }
@@ -39,10 +40,16 @@ public class TV : MonoBehaviour
     {
         watched = true;
         taskManager.RelayProgress();
+        tooltip.enabled = false;
     }
 
     public bool WasWatched()
     {
         return watched;
+    }
+
+    public void ResetTask()
+    {
+        watched = false;
     }
 }

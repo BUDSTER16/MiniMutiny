@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Terrain
+  - Ladder
+  - Music
   layers:
   - Default
   - TransparentFX

@@ -8,26 +8,27 @@ public class NPCInteraction : MonoBehaviour
     [SerializeField] private Canvas tooltip;
 
     [Header("Textbox components")]
-    [SerializeField] private GameObject textbox;
-    [SerializeField] private TextMeshProUGUI namebox;
-    [SerializeField] private TextMeshProUGUI dialoguebox;
+    [SerializeField] public GameObject textbox;
+    [SerializeField] public TextMeshProUGUI namebox;
+    [SerializeField] public TextMeshProUGUI dialoguebox;
 
 
     [Header("Dialogue Details")]
-    [SerializeField] private string characterName;
-    [SerializeField] private string[] dialogues;
+    [SerializeField] public string characterName;
+    [SerializeField] public string[] dialogues;
     [SerializeField] private bool beginner;
 
 
     private bool begunDaily = false;
-    private int activeDialogue = 0;
+    public int activeDialogue;
 
-    private GameManager gameManager;
+    public GameManager gameManager;
 
 
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        activeDialogue = 0;
     }
 
 
@@ -72,6 +73,7 @@ public class NPCInteraction : MonoBehaviour
         else
         {
             textbox.SetActive(false);
+            Time.timeScale = 1;
             if(beginner && !begunDaily)
             {
                 beginnerMethod();
@@ -85,10 +87,21 @@ public class NPCInteraction : MonoBehaviour
         gameManager.BeginTasks();
         begunDaily = true;
         gameManager.DisableInvisWall();
+        swapBeginnerLines();
     }
 
     public void resetDay()
     {
         begunDaily = false;
+        gameManager.EnableInvisWall();
+    }
+
+    private void swapBeginnerLines()
+    {
+        string[] newDialogues = 
+            {
+            "Good mornin' and good luck with your task today!",
+            "Have a good one!"
+            };
     }
 }

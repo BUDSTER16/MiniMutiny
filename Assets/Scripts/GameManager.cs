@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     bool key = false, dGear = false;
+    bool scroll = false, chip = false;
 
     bool daytime = true;
 
@@ -17,7 +18,7 @@ public class GameManager : MonoBehaviour
     [Header("Player Controller")]
     [SerializeField] private PlayerControl player;
 
-    private float cycleTimer = 15;
+    private float cycleTimer = 45;
     private float timer;
     [Header("Timer UI")]
     [SerializeField] private TextMeshProUGUI timerText;
@@ -33,11 +34,19 @@ public class GameManager : MonoBehaviour
     [Header("Beginner NPC")]
     [SerializeField] NPCInteraction beginner;
 
+    [Header("Dialogue")]
+    [SerializeField] private GameObject dialogueBox;
+    [SerializeField] private TextMeshProUGUI dialogueName;
+    [SerializeField] private TextMeshProUGUI dialogueText;
+
+    [Header("Background")]
+    [SerializeField] private SpriteRenderer[] backgroundPanels;
+    [SerializeField] private Sprite dayBG, nightBG;
+
     private bool timerEnabled = false;
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
         timer = cycleTimer;
         taskManager = FindObjectOfType<TaskManager>();
     }
@@ -53,6 +62,7 @@ public class GameManager : MonoBehaviour
         if (IsDaytime())
         {
             collectable = false;
+            CantSteal();
         }
         else
         {
@@ -60,11 +70,15 @@ public class GameManager : MonoBehaviour
             {
                 case "Key":
                     key = true;
-                    Debug.Log("Key Collected!");
                     break;
                 case "Diamond Gear":
                     dGear = true;
-                    Debug.Log("Diamond Gear Collected!");
+                    break;
+                case "Scroll":
+                    scroll = true;
+                    break;
+                case "Data Chip":
+                    chip = true;
                     break;
             }
             collectable = true;
@@ -83,6 +97,12 @@ public class GameManager : MonoBehaviour
                 break;
             case "Diamond Gear":
                 collected = dGear;
+                break;
+            case "Scroll":
+                collected = scroll;
+                break;
+            case "Data Chip":
+                collected = chip;
                 break;
         }
 
@@ -111,6 +131,9 @@ public class GameManager : MonoBehaviour
             daytime = false;
             clock.sprite = nightClock;
             taskManager.MutinyTask();
+            SwapBackgrounds(nightBG);
+            beginner.gameObject.SetActive(false);
+            if(taskManager.GetCurrentTask() != "Completed") { Lose(); }
         }
         else
         {
@@ -120,6 +143,8 @@ public class GameManager : MonoBehaviour
             invisWall.SetActive(true);
             beginner.resetDay();
             StopTimer();
+            SwapBackgrounds(dayBG);
+            beginner.gameObject.SetActive(true);
         }
 
         timer = cycleTimer;
@@ -129,11 +154,21 @@ public class GameManager : MonoBehaviour
     public void SetActiveText(NPCInteraction NPC)
     {
         activeSpeaker = NPC;
+        Time.timeScale = 0;
     }
 
     public void ContinueButton()
     {
-        activeSpeaker.NextDialogue();
+        if(activeSpeaker != null)
+        {
+            activeSpeaker.NextDialogue();
+        }
+        else
+        {
+            dialogueBox.SetActive(false);
+            Time.timeScale = 1;
+        }
+        
     }
 
     private string FormattedTime(float rawTime)
@@ -176,9 +211,63 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("Ending");
     }
 
+    public void Lose()
+    {
+        SceneManager.LoadScene("BadEnding");
+    }
+
+    public void WakeUp()
+    {
+        SceneManager.LoadScene("Roomba");
+    }
+
     public void DisableInvisWall()
     {
         invisWall.SetActive(false);
     }
 
+    public void EnableInvisWall()
+    {
+        invisWall.SetActive(true);
+    }
+
+    public void CantSteal()
+    {
+        activeSpeaker = null;
+        dialogueBox.SetActive(true);
+        dialogueName.text = "You";
+        dialogueText.text = "I can't steal this in broad daylight! I need to wait for nighttime.";
+        Time.timeScale = 0;
+    }
+
+    public void CantSleepTask()
+    {
+        activeSpeaker = null;
+        dialogueBox.SetActive(true);
+        dialogueName.text = "You";
+        dialogueText.text = "I can't sleep before I finish my task!";
+        Time.timeScale = 0;
+    }
+
+    public void CantSleepNight()
+    {
+        activeSpeaker = null;
+        dialogueBox.SetActive(true);
+        dialogueName.text = "You";
+        dialogueText.text = "I can't sleep, the night is the only time I can move freely!";
+        Time.timeScale = 0;
+    }
+
+    public void Sleep()
+    {
+        timer = 0;
+    }
+
+    public void SwapBackgrounds(Sprite bg)
+    {
+        foreach(SpriteRenderer background in backgroundPanels)
+        {
+            background.sprite = bg;
+        }
+    }
 }
