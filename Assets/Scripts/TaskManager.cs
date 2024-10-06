@@ -184,6 +184,8 @@ public class TaskManager : MonoBehaviour
     {
         taskTitle.text = "Task Complete";
         taskDetails.text = "Sit back and relax or explore and plan your night";
+
+        activeTask = "Completed";
     }
 
     public string GetCurrentTask()

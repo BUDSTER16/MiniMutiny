@@ -85,10 +85,21 @@ public class NPCInteraction : MonoBehaviour
         gameManager.BeginTasks();
         begunDaily = true;
         gameManager.DisableInvisWall();
+        swapBeginnerLines();
     }
 
     public void resetDay()
     {
         begunDaily = false;
+        gameManager.EnableInvisWall();
+    }
+
+    private void swapBeginnerLines()
+    {
+        string[] newDialogues = 
+            {
+            "Good mornin' and good luck with your task today!",
+            "Have a good one!"
+            };
     }
 }

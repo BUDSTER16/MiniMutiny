@@ -171,8 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0c17bb14506d27449c892828885a167, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  jumpVelocity: 6
+  speed: 4
+  climbSpeed: 5
   playerLayer:
     serializedVersion: 2
     m_Bits: 8

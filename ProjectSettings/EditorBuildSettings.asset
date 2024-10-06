@@ -9,9 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 0357edd0f393a754eabbad4198176ffd
   - enabled: 1
-    path: Assets/Scenes/TestScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/Intro.unity
+    guid: ab09c2e8c10db6a42a3cbc367c867ede
+  - enabled: 1
+    path: Assets/Scenes/Roomba.unity
+    guid: 24b34e8e3b67627428b439dc57ebeaed
+  - enabled: 1
+    path: Assets/Scenes/BadEnding.unity
+    guid: 090a9748a35d0f74c988211998fc08ed
   - enabled: 1
     path: Assets/Scenes/Ending.unity
     guid: 7b7af588edc7bdd4ab9d3fbfe8cd77b2
+  - enabled: 0
+    path: Assets/Scenes/TestScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
