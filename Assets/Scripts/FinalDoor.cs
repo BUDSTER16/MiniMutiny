@@ -59,7 +59,7 @@ public class FinalDoor : MonoBehaviour
 
     private void CheckRequirements()
     {
-        if (gameManager.HasCollectable("Key") && gameManager.HasCollectable("Diamond Gear"))
+        if (gameManager.HasCollectable("Diamond Gear"))
         {
             gameManager.Win();
         }

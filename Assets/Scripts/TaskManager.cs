@@ -23,6 +23,7 @@ public class TaskManager : MonoBehaviour
     //Sensor Task Variable
     [Header("Required Sensor Object")]
     [SerializeField] private GameObject sensorGauge;
+    [SerializeField] private Transform indicator;
 
     //Relay Task Variables
     [Header("Required Relay Object")]
@@ -34,10 +35,11 @@ public class TaskManager : MonoBehaviour
     [Header("Required LED Objects")]
     [SerializeField] private GameObject[] leds;
     bool obtainedLED = false;
-    Vector3 ledSpawn = new Vector3(-19f, 4.5f, 0);
 
     public void QueueTasks()
     {
+        resetTasks();
+
         string swapTask;
 
         for(int i = 0; i < tasks.Length; i++)
@@ -52,6 +54,23 @@ public class TaskManager : MonoBehaviour
         {
             taskList.Enqueue(task);
         }
+    }
+
+    private void resetTasks()
+    {
+        relayStepsDone = 0;
+        television.GetComponent<TV>().ResetTask();
+
+        indicator.localPosition = new Vector3(-0.25f, -0.2f, 0);
+
+        leversPulled = 0;
+        foreach(GameObject lever in levers)
+        {
+            lever.GetComponent<Lever>().Unflip();
+        }
+
+        obtainedLED = false;
+
     }
 
     public void ActivateTask()
@@ -183,7 +202,7 @@ public class TaskManager : MonoBehaviour
     private void CompleteTask()
     {
         taskTitle.text = "Task Complete";
-        taskDetails.text = "Sit back and relax or explore and plan your night";
+        taskDetails.text = "Sit back and relax, explore and plan your night or go to bed to end the day";
 
         activeTask = "Completed";
     }
@@ -196,12 +215,12 @@ public class TaskManager : MonoBehaviour
     public void MutinyTask()
     {
         taskTitle.text = "MUTINY";
-        taskDetails.text = "Get the Key and the Diamond Gear and use them to take over the ship in the captain's office";
+        taskDetails.text = "Get the <b>Diamond Gear</b> and use it to take over the ship in the captain's office";
     }
 
     public void MorningTask()
     {
         taskTitle.text = "Get A Task";
-        taskDetails.text = "Talk to the officer outside your room to get a task!";
+        taskDetails.text = "Talk to the <b>officer</b> outside your room to get a task!";
     }
 }

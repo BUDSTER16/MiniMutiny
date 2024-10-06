@@ -6,16 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class CreditButton : MonoBehaviour
 {
-    private Button backToMenu;
-
-    private void Start()
+    public void Menu()
     {
-        backToMenu = GetComponent<Button>();
-        backToMenu.onClick.AddListener(Menu);
+        SceneManager.LoadScene("MainMenu");
     }
 
-    void Menu()
+    public void Retry()
     {
-        //SceneManager.LoadScene(MainMenu);
+        SceneManager.LoadScene("Roomba");
     }
 }

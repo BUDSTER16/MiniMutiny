@@ -8,6 +8,9 @@ public class KeyPedestal : MonoBehaviour
     [SerializeField] private GameObject wall;
     private GameManager gameManager;
 
+    [Header("Access Item")]
+    [SerializeField] private string unlockItem;
+
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
@@ -18,7 +21,7 @@ public class KeyPedestal : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             tooltip.enabled = true;
-            if (Input.GetButton("Interact") && gameManager.HasCollectable("Key"))
+            if (Input.GetButton("Interact") && gameManager.HasCollectable(unlockItem))
             {
                 DisableWall();
             }

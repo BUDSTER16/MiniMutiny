@@ -42,6 +42,7 @@ public class Collectable : MonoBehaviour
     {
         if (gameManager.Collect(item_name))
         {
+            GetComponent<AudioSource>().Play();
             Destroy(gameObject);
         }
         

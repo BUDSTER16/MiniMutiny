@@ -39,10 +39,16 @@ public class TV : MonoBehaviour
     {
         watched = true;
         taskManager.RelayProgress();
+        tooltip.enabled = false;
     }
 
     public bool WasWatched()
     {
         return watched;
+    }
+
+    public void ResetTask()
+    {
+        watched = false;
     }
 }

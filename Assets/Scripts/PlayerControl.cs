@@ -7,43 +7,50 @@ public class PlayerControl : MonoBehaviour
     [Header("Player Stats")]
     [SerializeField] float speed = 4f;
     [SerializeField] float climbSpeed = 5f;
-    //[SerializeField] float jumpVelocity = 7f;
+    [SerializeField] float rollSpeed = 0.5f;
+
     [SerializeField] LayerMask playerLayer;
 
     private float horizontal_move;
     private float vertical_move;
-    //private bool jump;
-    //private bool jumped = false;
+    
+    
 
     [SerializeField]private Vector3 spawnPos = new Vector3(-6f, -3.5f, 0f);
 
     Rigidbody2D rb;
     BoxCollider2D col;
+    SpriteRenderer sprt;
 
-    //private float jumpDebugTimer = 1.5f;
-    //private bool jumpTimerStarted = false;
+    [Header("Animated Body")]
+    [SerializeField] private Transform body;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
+        sprt = GetComponent<SpriteRenderer>();
     }
 
     void Update()
     {
         horizontal_move = Input.GetAxisRaw("Horizontal");
         vertical_move = Input.GetAxisRaw("Vertical");
-        //jump = Input.GetButton("Jump") && CheckGrounded();
+        
+        if(horizontal_move < 0)
+        {
+            sprt.flipX = true;
+            body.Rotate(Vector3.forward * rollSpeed);
+        }
+        else if (horizontal_move > 0)
+        {
+            sprt.flipX = false;
+            body.Rotate(-Vector3.forward * rollSpeed);
+        }
+        else
+        {
 
-        //if(jumpTimerStarted && jumpDebugTimer > 0) { jumpDebugTimer -= Time.deltaTime; }
-        //else if (jumpDebugTimer <= 0) 
-        //{ 
-        //    jumpTimerStarted = false; 
-        //    if(JumpDebug())
-        //    {
-
-        //    }
-        //}
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)

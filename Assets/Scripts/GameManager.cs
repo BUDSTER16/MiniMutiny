@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     bool key = false, dGear = false;
+    bool scroll = false, chip = false;
 
     bool daytime = true;
 
@@ -69,11 +70,15 @@ public class GameManager : MonoBehaviour
             {
                 case "Key":
                     key = true;
-                    Debug.Log("Key Collected!");
                     break;
                 case "Diamond Gear":
                     dGear = true;
-                    Debug.Log("Diamond Gear Collected!");
+                    break;
+                case "Scroll":
+                    scroll = true;
+                    break;
+                case "Data Chip":
+                    chip = true;
                     break;
             }
             collectable = true;
@@ -92,6 +97,12 @@ public class GameManager : MonoBehaviour
                 break;
             case "Diamond Gear":
                 collected = dGear;
+                break;
+            case "Scroll":
+                collected = scroll;
+                break;
+            case "Data Chip":
+                collected = chip;
                 break;
         }
 
@@ -143,6 +154,7 @@ public class GameManager : MonoBehaviour
     public void SetActiveText(NPCInteraction NPC)
     {
         activeSpeaker = NPC;
+        Time.timeScale = 0;
     }
 
     public void ContinueButton()
@@ -154,6 +166,7 @@ public class GameManager : MonoBehaviour
         else
         {
             dialogueBox.SetActive(false);
+            Time.timeScale = 1;
         }
         
     }
@@ -224,6 +237,30 @@ public class GameManager : MonoBehaviour
         dialogueBox.SetActive(true);
         dialogueName.text = "You";
         dialogueText.text = "I can't steal this in broad daylight! I need to wait for nighttime.";
+        Time.timeScale = 0;
+    }
+
+    public void CantSleepTask()
+    {
+        activeSpeaker = null;
+        dialogueBox.SetActive(true);
+        dialogueName.text = "You";
+        dialogueText.text = "I can't sleep before I finish my task!";
+        Time.timeScale = 0;
+    }
+
+    public void CantSleepNight()
+    {
+        activeSpeaker = null;
+        dialogueBox.SetActive(true);
+        dialogueName.text = "You";
+        dialogueText.text = "I can't sleep, the night is the only time I can move freely!";
+        Time.timeScale = 0;
+    }
+
+    public void Sleep()
+    {
+        timer = 0;
     }
 
     public void SwapBackgrounds(Sprite bg)

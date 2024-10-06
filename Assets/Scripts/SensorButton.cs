@@ -49,6 +49,14 @@ public class SensorButton : MonoBehaviour
         if(pushCooldown <= 0)
         {
             gaugeIndicator.localPosition += new Vector3(buttonStrenth, 0, 0);
+            if(gaugeIndicator.localPosition.x < -0.6)
+            {
+                gaugeIndicator.localPosition = new Vector3(-0.6f, -0.2f, 0);
+            }
+            else if (gaugeIndicator.localPosition.x > 0.6)
+            {
+                gaugeIndicator.localPosition = new Vector3(0.6f, -0.2f, 0);
+            }
 
             pushCooldown = pushCooldownMax;
         }
